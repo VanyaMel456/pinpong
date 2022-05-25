@@ -41,9 +41,41 @@ class Player(GameSprite):
 
 raketka_1 = Player('rectangle.jpg', 10, 150, 50, 180, 4)
 raketka_2 = Player('rectangle.jpg', 520, 150, 50, 180, 4)
-
+ball = GameSprite('ball.png',300, 150,  70, 70, 4 )
 #флаги, отвечающие за состояние игры
 game = True
 finish = False
 clock = time.Clock()
 FPS = 60
+speed_x = 3
+speed_y = 3
+
+
+
+
+
+
+
+
+while game:
+    for e in event.get():
+       if e.type == QUIT:
+           game = False  
+    if finish != True:
+        window.fill(back)
+        raketka_1.update_l()
+        raketka_2.update_r()
+        raketka_1.reset()
+        raketka_2.reset()
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
+        ball.reset()
+        if ball.rect.y > win_height-50 or ball.rect.y < 0:
+            speed_y *= -1
+        if sprite.collide_rect(raketka_1, ball) or sprite.collide_rect(raketka_2, ball):
+            speed_x *= -1    
+
+
+
+    display.update()
+    clock.tick(FPS)
